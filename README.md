@@ -1,6 +1,7 @@
 # How to run:
 
 - `yarn` to install depedencies
+- Copy `.env.example` and rename the copy to `.env`
 - Add the `PALPATINE_API_KEY` to the `.env`
 - `yarn start` to run the application
 
