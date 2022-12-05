@@ -1,13 +1,17 @@
 # How to run:
-
-- `yarn` to install depedencies
+### Setup
 - Copy `.env.example` and rename the copy to `.env`
 - Add the `PALPATINE_API_KEY` to the `.env`
+
+## To run
+
+### With docker-compose
+- `docker-compose up` 
+
+### Without docker-compose
+- `yarn` to install depedencies
 - `yarn start` to run the application
 
-OR
-
-- You can use `docker-compose up` 
 
 Both methods will create the output file in the `output` folder
 
