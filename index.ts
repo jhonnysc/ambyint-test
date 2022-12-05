@@ -61,6 +61,7 @@ const start = async () => {
     }
   }
 
+  console.log('Cleaning up dupe data');
   // Clean up the replicate data by name
   const found = new Set();
   const filteredResidents = responses.filter((data) => {
@@ -69,6 +70,7 @@ const start = async () => {
     return true;
   });
 
+  console.log('Requesting planets data...');
   // Make the the planets requests
   const requestedPlanets = new Set();
   const planetsPromises = filteredResidents.map(async (data) => {
@@ -86,6 +88,7 @@ const start = async () => {
 
   const planetsData = await Promise.all(planetsPromises);
 
+  console.log('Creating grouping data...');
   // Create the grouping
   const grouping: string[] = planetsData.reduce<string[]>((acc, curr) => {
     if (!curr) return acc;
@@ -102,6 +105,7 @@ const start = async () => {
     return acc;
   }, []);
 
+  console.log('Writing file...');
   // Write to the file
   fs.writeFileSync('./output/citizens-super-secret-info.txt', grouping.join('\n'), {
     encoding: 'utf-8',
