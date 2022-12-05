@@ -1,6 +1,4 @@
-import dotenv from "dotenv";
-dotenv.config();
-
+import "./config";
 import { decrypt, planets } from "./services";
 import fs from "fs";
 import readline from "readline";
