@@ -4,6 +4,9 @@
 - Add the `PALPATINE_API_KEY` to the `.env`
 - `yarn start` to run the application
 
+## Notes:
+I tried to use few as packages as possible for the sake of simplicity
+
 
 # Test
 
