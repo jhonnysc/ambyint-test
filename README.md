@@ -1,3 +1,12 @@
+# How to run:
+
+- `yarn` to install depedencies
+- Add the `PALPATINE_API_KEY` to the `.env`
+- `yarn start` to run the application
+
+
+# Test
+
 ## Palpatine Exercise
 
 Following Supreme Chancellor Palpatine’s reorganization of the Galactic Republic, he has devised an initiative to 
