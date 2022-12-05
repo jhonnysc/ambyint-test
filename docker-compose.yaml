@@ -6,4 +6,5 @@ services:
       context: ./
     env_file: .env
     volumes:
-      - ./usr/app/ambyint
+      - /usr/app/ambyint
+      - ./output:/usr/app/ambyint/output

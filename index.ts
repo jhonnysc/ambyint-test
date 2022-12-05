@@ -103,7 +103,7 @@ const start = async () => {
   }, []);
 
   // Write to the file
-  fs.writeFileSync('citizens-super-secret-info.txt', grouping.join('\n'), {
+  fs.writeFileSync('./output/citizens-super-secret-info.txt', grouping.join('\n'), {
     encoding: 'utf-8',
   });
 };
