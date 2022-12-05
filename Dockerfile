@@ -7,4 +7,6 @@ COPY yarn.lock yarn.lock
 
 COPY . .
 
+RUN yarn
+
 CMD ["yarn", "start"]
