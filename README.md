@@ -4,6 +4,12 @@
 - Add the `PALPATINE_API_KEY` to the `.env`
 - `yarn start` to run the application
 
+OR
+
+- You can use `docker-compose up` 
+
+Both methods will create the output file in the `output` folder
+
 ## Notes:
 I tried to use few as packages as possible for the sake of simplicity
 
