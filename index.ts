@@ -1,14 +1,14 @@
-import "./config";
-import { decrypt, planets } from "./services";
-import fs from "fs";
-import readline from "readline";
-import { PalpatineResponse } from "./types";
-import { getUrlId } from "./utils";
+import './config';
+import fs from 'fs';
+import readline from 'readline';
+import { decrypt, planets } from './services';
+import { PalpatineResponse } from './types';
+import { getUrlId } from './utils';
 
 const start = async () => {
   // Creating file stream to read individual lines to prepare for the batch creation
-  const linesStream = fs.createReadStream("./super-secret-data.txt", {
-    encoding: "utf-8",
+  const linesStream = fs.createReadStream('./super-secret-data.txt', {
+    encoding: 'utf-8',
   });
   const rl = readline.createInterface({
     input: linesStream,
@@ -39,14 +39,17 @@ const start = async () => {
     promises.push(decrypt(batch));
     batchCounter += 1;
     console.log(`Batch ${batchCounter} of ${batches.length}`);
-    // Rate limite seems to baround 15~20 sec with some limite by minute so even if 15 works, it fails before reaching 100?
+    // Rate limite seems to baround 15~20 sec with some limite by minute so even if 15 works,
+    // it fails before reaching 100?
     // Leaving as 5/sec for safety as it seems to work fine
     // There seems to be more a bigger rate limit, minute maybe?
     if (batchCounter % 5 === 0) {
       // Process the current batch
       await (
         await Promise.all(promises)
-      ).forEach((data) => data.forEach((line) => responses.push(line)));
+      ).forEach(
+        (data) => data.forEach((line) => responses.push(line)),
+      );
 
       // Wait 1sec to prevent rate limit
       await new Promise((resolve) => {
@@ -70,7 +73,7 @@ const start = async () => {
   const requestedPlanets = new Set();
   const planetsPromises = filteredResidents.map(async (data) => {
     // If we already did the request, no need to do again since we can have duplcate of homeworlds
-    if (requestedPlanets.has(data.homeworld)) return;
+    if (requestedPlanets.has(data.homeworld)) return null;
     requestedPlanets.add(data.homeworld);
     // If the api is down just use the homeworld
     try {
@@ -83,7 +86,7 @@ const start = async () => {
 
   const planetsData = await Promise.all(planetsPromises);
 
-  // Create the grouping 
+  // Create the grouping
   const grouping: string[] = planetsData.reduce<string[]>((acc, curr) => {
     if (!curr) return acc;
 
@@ -95,14 +98,13 @@ const start = async () => {
       }
     });
 
-    acc.push(`${key}:${planetResident.join(",")}`)
-    return acc
+    acc.push(`${key}:${planetResident.join(',')}`);
+    return acc;
   }, []);
 
-
   // Write to the file
-  fs.writeFileSync("citizens-super-secret-info.txt", grouping.join("\n"), {
-    encoding: "utf-8",
+  fs.writeFileSync('citizens-super-secret-info.txt', grouping.join('\n'), {
+    encoding: 'utf-8',
   });
 };
 
