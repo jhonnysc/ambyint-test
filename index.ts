@@ -2,7 +2,7 @@ import './config';
 import fs from 'fs';
 import readline from 'readline';
 import { decrypt, planets } from './services';
-import { PalpatineResponse } from './types';
+import { PalpatineResponse } from './types/responses';
 import { getUrlId } from './utils';
 
 const start = async () => {
