@@ -16,7 +16,7 @@
 Both methods will create the output file in the `output` folder
 
 ## Notes:
-I tried to use few as packages as possible for the sake of simplicity
+I tried to use as few packages as possible for the sake of simplicity
 
 
 # Test
