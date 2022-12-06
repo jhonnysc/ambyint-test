@@ -1,7 +1,7 @@
 import './config';
 import fs from 'fs';
 import readline from 'readline';
-import { decrypt, planets } from './services';
+import { decrypt, getAllPlanets } from './services';
 import { PalpatineResponse } from './types/responses';
 import { getUrlId } from './utils';
 
@@ -71,26 +71,26 @@ const start = async () => {
   });
 
   console.log('Requesting planets data...');
-  // Make the the planets requests
-  const requestedPlanets = new Set();
-  const planetsPromises = filteredResidents.map(async (data) => {
-    // If we already did the request, no need to do again since we can have duplcate of homeworlds
-    if (requestedPlanets.has(data.homeworld)) return null;
-    requestedPlanets.add(data.homeworld);
-    // If the api is down just use the homeworld
-    try {
-      const planet = await planets(data.homeworld);
-      return { name: planet.name, homeworld: data.homeworld };
-    } catch (e) {
-      return { name: null, homeworld: data.homeworld };
-    }
-  });
+  let planets: { name: string | null, homeworld: string }[] = [];
 
-  const planetsData = await Promise.all(planetsPromises);
+  try {
+    const allPlanets = await getAllPlanets();
+
+    planets = allPlanets
+      .map((data) => ({ name: data.name, homeworld: data.url }));
+  } catch (e) {
+    const parsedHomeworlds = new Set();
+
+    filteredResidents.forEach((data) => {
+      if (parsedHomeworlds.has(data.homeworld)) return;
+      parsedHomeworlds.add(data.homeworld);
+      planets.push({ name: null, homeworld: data.homeworld });
+    });
+  }
 
   console.log('Creating grouping data...');
   // Create the grouping
-  const grouping: string[] = planetsData.reduce<string[]>((acc, curr) => {
+  const grouping: string[] = planets.reduce<string[]>((acc, curr) => {
     if (!curr) return acc;
 
     const key = curr.name || curr.homeworld;

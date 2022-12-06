@@ -1,3 +1,4 @@
+/* eslint-disable no-await-in-loop */
 import axios from 'axios';
 import { PalpatineResponse, PlanetResponse } from './types/responses';
 
@@ -14,8 +15,28 @@ export const decrypt = async (data: string[]): Promise<PalpatineResponse[]> => {
   return response.data.map((line) => JSON.parse(line));
 };
 
-export const planets = async (homeworld: string) => {
-  const url = homeworld.replace('https://swapi.co', 'http://swapi.dev');
+export const getPlanets = async (page = 1) => axios.get<PlanetResponse>('https://swapi.dev/api/planets', {
+  params: {
+    page,
+  },
+});
 
-  return (await axios.get<PlanetResponse>(url)).data;
+export const getAllPlanets = async () => {
+  let planets: PlanetResponse['results'] = [];
+
+  // There is only 60 pages for now
+  let page = 1;
+
+  while (page <= 6) {
+    const response = await getPlanets(page);
+    planets = planets.concat(response.data.results);
+
+    if (response.data.next) {
+      page += 1;
+    } else {
+      break;
+    }
+  }
+
+  return planets;
 };

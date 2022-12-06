@@ -18,6 +18,13 @@ export interface PalpatineResponse {
 }
 
 export interface PlanetResponse {
+  count: number;
+  next: string;
+  previous?: any;
+  results: Result[];
+}
+
+interface Result {
   name: string;
   rotation_period: string;
   orbital_period: string;
