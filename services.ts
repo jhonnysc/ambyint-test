@@ -24,7 +24,7 @@ export const getPlanets = async (page = 1) => axios.get<PlanetResponse>('https:/
 export const getAllPlanets = async () => {
   let planets: PlanetResponse['results'] = [];
 
-  // There is only 60 pages for now
+  // There is only 6 with 10 items pages for now
   let page = 1;
 
   while (page <= 6) {
